@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
+  color: #00ff41;
+  overflow-x: hidden;
+}
+
+/* Terminal-specific styles */
+.font-mono {
+  font-family: "JetBrains Mono", "Courier New", monospace;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ff41 0%, #00cc33 100%);
+  border-radius: 6px;
+  border: 2px solid #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00cc33 0%, #00aa22 100%);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00ff41 #1a1a1a;
+}
+
+/* Text selection */
+::selection {
+  background-color: #00ff41;
+  color: #000000;
+}
+
+::-moz-selection {
+  background-color: #00ff41;
+  color: #000000;
+}
+
+/* Terminal cursor animation */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 5px #00ff41;
+  }
+  50% {
+    box-shadow: 0 0 15px #00ff41, 0 0 25px #00ff41;
+  }
+  100% {
+    box-shadow: 0 0 5px #00ff41;
+  }
+}
+
+/* Matrix-style background effect (subtle) */
+.matrix-bg::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 98px,
+      #00ff41 100px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 98px,
+      #00ff41 100px
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Link styles for terminal */
+a {
+  color: #00bfff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: #87ceeb;
+  text-shadow: 0 0 5px #00bfff;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .terminal-header {
+    padding: 8px 12px;
+  }
+
+  .terminal-body {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+}
+
+/* Smooth transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Input focus styles */
+input:focus {
+  outline: none;
+  background: transparent;
+}
+
+/* Custom utility classes */
+.text-matrix {
+  color: #00ff41;
+}
+
+.bg-terminal {
+  background-color: #000000;
+}
+
+.border-matrix {
+  border-color: #00ff41;
+}
+
+.shadow-matrix {
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Loading spinner */
+.loading-dots::after {
+  content: "";
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0%,
+  20% {
+    content: ".";
+  }
+  40% {
+    content: "..";
+  }
+  60% {
+    content: "...";
+  }
+  80%,
+  100% {
+    content: ".";
+  }
+}
