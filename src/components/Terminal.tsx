@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { OutputLine as OutputLineType } from '../types';
-import CommandLine from './CommandLine';
-import OutputLine from './OutputLine';
-import { commandProcessor } from '../utils/commandProcessor';
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { OutputLine as OutputLineType } from "../types";
+import CommandLine from "./CommandLine";
+import OutputLine from "./OutputLine";
+import { commandProcessor } from "../utils/commandProcessor";
 
 const Terminal: React.FC = () => {
   const [output, setOutput] = useState<OutputLineType[]>([]);
@@ -13,7 +13,7 @@ const Terminal: React.FC = () => {
 
   const scrollToBottom = useCallback(() => {
     if (outputEndRef.current) {
-      outputEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      outputEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
 
@@ -23,7 +23,7 @@ const Terminal: React.FC = () => {
 
   useEffect(() => {
     // Load command history from localStorage
-    const savedHistory = localStorage.getItem('terminal-history');
+    const savedHistory = localStorage.getItem("terminal-history");
     if (savedHistory) {
       setCommandHistory(JSON.parse(savedHistory));
     }
@@ -31,71 +31,74 @@ const Terminal: React.FC = () => {
     // Display welcome message
     const welcomeOutput: OutputLineType[] = [
       {
-        id: 'welcome-1',
-        content: '████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-1",
+        content: "████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗",
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-2',
-        content: '╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-2",
+        content: "╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║",
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-3',
-        content: '   ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-3",
+        content: "   ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║",
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-4',
-        content: '   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-4",
+        content: "   ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║",
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-5',
-        content: '   ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-5",
+        content:
+          "   ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗",
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-6',
-        content: '   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-6",
+        content:
+          "   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝",
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-7',
-        content: '',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-7",
+        content: "",
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-8',
-        content: `Welcome to Sankalp's Terminal Portfolio v2.1.0`,
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-8",
+        content: `Welcome to JupiterCodes's Terminal Portfolio v2.1.0`,
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-9',
-        content: 'Type "help" to see available commands or "about" to learn more about me.',
-        type: 'output',
-        timestamp: new Date()
+        id: "welcome-9",
+        content:
+          'Type "help" to see available commands or "about" to learn more about me.',
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-10',
+        id: "welcome-10",
         content: 'Try "ask <question>" to chat with my AI assistant!',
-        type: 'output',
-        timestamp: new Date()
+        type: "output",
+        timestamp: new Date(),
       },
       {
-        id: 'welcome-11',
-        content: '',
-        type: 'output',
-        timestamp: new Date()
-      }
+        id: "welcome-11",
+        content: "",
+        type: "output",
+        timestamp: new Date(),
+      },
     ];
 
     setOutput(welcomeOutput);
@@ -110,38 +113,43 @@ const Terminal: React.FC = () => {
     const commandOutput: OutputLineType = {
       id: `cmd-${Date.now()}`,
       content: `$ ${commandText}`,
-      type: 'command',
-      timestamp: new Date()
+      type: "command",
+      timestamp: new Date(),
     };
 
-    setOutput(prev => [...prev, commandOutput]);
+    setOutput((prev) => [...prev, commandOutput]);
 
     // Update command history
     const updatedHistory = [...commandHistory, commandText];
     setCommandHistory(updatedHistory);
-    localStorage.setItem('terminal-history', JSON.stringify(updatedHistory.slice(-50)));
+    localStorage.setItem(
+      "terminal-history",
+      JSON.stringify(updatedHistory.slice(-50))
+    );
 
     try {
       // Process command
       const result = await commandProcessor.processCommand(commandText);
-      
+
       const responseOutput: OutputLineType = {
         id: `res-${Date.now()}`,
         content: result.content,
         type: result.type,
-        timestamp: new Date()
+        timestamp: new Date(),
       };
 
-      setOutput(prev => [...prev, responseOutput]);
+      setOutput((prev) => [...prev, responseOutput]);
     } catch (error) {
       const errorOutput: OutputLineType = {
         id: `err-${Date.now()}`,
-        content: `Error: ${error instanceof Error ? error.message : 'Unknown error occurred'}`,
-        type: 'error',
-        timestamp: new Date()
+        content: `Error: ${
+          error instanceof Error ? error.message : "Unknown error occurred"
+        }`,
+        type: "error",
+        timestamp: new Date(),
       };
 
-      setOutput(prev => [...prev, errorOutput]);
+      setOutput((prev) => [...prev, errorOutput]);
     } finally {
       setIsProcessing(false);
     }
@@ -152,12 +160,14 @@ const Terminal: React.FC = () => {
   };
 
   return (
-    <div 
+    <div
       ref={terminalRef}
       className="min-h-screen bg-black text-green-400 font-mono text-sm overflow-hidden"
       onClick={() => {
         // Focus on command input when terminal is clicked
-        const commandInput = document.querySelector('input[type="text"]') as HTMLInputElement;
+        const commandInput = document.querySelector(
+          'input[type="text"]'
+        ) as HTMLInputElement;
         if (commandInput) {
           commandInput.focus();
         }

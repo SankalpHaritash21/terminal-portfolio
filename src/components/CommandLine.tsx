@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, KeyboardEvent } from 'react';
+import React, { useState, useRef, useEffect, KeyboardEvent } from "react";
 
 interface CommandLineProps {
   onCommand: (command: string) => Promise<void>;
@@ -6,8 +6,12 @@ interface CommandLineProps {
   isProcessing: boolean;
 }
 
-const CommandLine: React.FC<CommandLineProps> = ({ onCommand, commandHistory, isProcessing }) => {
-  const [input, setInput] = useState('');
+const CommandLine: React.FC<CommandLineProps> = ({
+  onCommand,
+  commandHistory,
+  isProcessing,
+}) => {
+  const [input, setInput] = useState("");
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [showCursor, setShowCursor] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,7 +19,7 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, commandHistory, is
   // Blinking cursor effect
   useEffect(() => {
     const interval = setInterval(() => {
-      setShowCursor(prev => !prev);
+      setShowCursor((prev) => !prev);
     }, 530);
     return () => clearInterval(interval);
   }, []);
@@ -28,38 +32,55 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, commandHistory, is
   }, [isProcessing]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       if (input.trim()) {
         onCommand(input.trim());
-        setInput('');
+        setInput("");
         setHistoryIndex(-1);
       }
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
       if (commandHistory.length > 0) {
-        const newIndex = historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
+        const newIndex =
+          historyIndex === -1
+            ? commandHistory.length - 1
+            : Math.max(0, historyIndex - 1);
         setHistoryIndex(newIndex);
         setInput(commandHistory[newIndex]);
       }
-    } else if (e.key === 'ArrowDown') {
+    } else if (e.key === "ArrowDown") {
       e.preventDefault();
       if (historyIndex !== -1) {
         const newIndex = historyIndex + 1;
         if (newIndex >= commandHistory.length) {
           setHistoryIndex(-1);
-          setInput('');
+          setInput("");
         } else {
           setHistoryIndex(newIndex);
           setInput(commandHistory[newIndex]);
         }
       }
-    } else if (e.key === 'Tab') {
+    } else if (e.key === "Tab") {
       e.preventDefault();
       // Simple command completion
-      const commands = ['help', 'about', 'skills', 'projects', 'experience', 'resume', 'socials', 'ask', 'joke', 'inspire', 'clear'];
-      const matches = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
+      const commands = [
+        "help",
+        "about",
+        "skills",
+        "projects",
+        "experience",
+        "resume",
+        "socials",
+        "ask",
+        "joke",
+        "inspire",
+        "clear",
+      ];
+      const matches = commands.filter((cmd) =>
+        cmd.startsWith(input.toLowerCase())
+      );
       if (matches.length === 1) {
-        setInput(matches[0] + ' ');
+        setInput(matches[0] + " ");
       }
     }
   };
@@ -76,24 +97,26 @@ const CommandLine: React.FC<CommandLineProps> = ({ onCommand, commandHistory, is
           onKeyDown={handleKeyDown}
           disabled={isProcessing}
           className="bg-transparent border-none outline-none text-green-400 font-mono text-sm w-full caret-transparent"
-          style={{ caretColor: 'transparent' }}
+          style={{ caretColor: "transparent" }}
           autoComplete="off"
           spellCheck="false"
         />
-        <span 
+        <span
           className={`absolute top-0 left-0 pointer-events-none font-mono text-sm ${
-            showCursor && !isProcessing ? 'text-green-400' : 'text-transparent'
+            showCursor && !isProcessing ? "text-green-400" : "text-transparent"
           }`}
-          style={{ 
+          style={{
             left: `${input.length * 0.6}em`,
-            animation: showCursor ? 'none' : 'blink 1s infinite'
+            animation: showCursor ? "none" : "blink 1s infinite",
           }}
         >
           █
         </span>
       </div>
       {isProcessing && (
-        <span className="text-yellow-400 ml-2 animate-pulse">Processing...</span>
+        <span className="text-yellow-400 ml-2 animate-pulse">
+          Processing...
+        </span>
       )}
     </div>
   );

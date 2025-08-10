@@ -1,78 +1,83 @@
-import { geminiService } from '../services/geminiService';
-import { personalInfo } from '../data/personalInfo';
-import ProjectCard from '../components/ProjectCard';
-import React from 'react';
+import { geminiService } from "../services/geminiService";
+import { personalInfo } from "../data/personalInfo";
 
 interface CommandResult {
   content: string | JSX.Element;
-  type: 'output' | 'error' | 'ai';
+  type: "output" | "error" | "ai";
 }
 
 class CommandProcessor {
   async processCommand(input: string): Promise<CommandResult> {
-    const parts = input.trim().split(' ');
+    const parts = input.trim().split(" ");
     const command = parts[0].toLowerCase();
     const args = parts.slice(1);
 
     switch (command) {
-      case 'help':
+      case "help":
         return this.showHelp();
-      
-      case 'about':
+
+      case "about":
         return this.showAbout();
-      
-      case 'skills':
+
+      case "skills":
         return this.showSkills();
-      
-      case 'projects':
+
+      case "projects":
         return this.showProjects();
-      
-      case 'experience':
+
+      case "experience":
         return this.showExperience();
-      
-      case 'resume':
+
+      case "resume":
         return this.showResume();
-      
-      case 'socials':
+
+      case "socials":
         return this.showSocials();
-      
-      case 'ask':
-        return this.askAI(args.join(' '));
-      
-      case 'joke':
+
+      case "ask":
+        return this.askAI(args.join(" "));
+
+      case "joke":
         return this.getJoke();
-      
-      case 'inspire':
+
+      case "inspire":
         return this.getInspiration();
-      
-      case 'clear':
-        return { content: 'CLEAR_COMMAND', type: 'output' };
-      
-      case 'sudo':
-        if (args.join(' ') === 'rm -rf /*') {
+
+      case "clear":
+      case "cls":
+        return { content: "CLEAR_COMMAND", type: "output" };
+
+      case "sudo":
+        if (args.join(" ") === "rm -rf /*") {
           return this.sudoRmRf();
         }
-        return { content: `sudo: ${args.join(' ')}: command not found`, type: 'error' };
-      
-      case 'ls':
+        return {
+          content: `sudo: ${args.join(" ")}: command not found`,
+          type: "error",
+        };
+
+      case "ls":
         return this.listDirectory();
-      
-      case 'pwd':
-        return { content: '/home/sankalp/portfolio', type: 'output' };
-      
-      case 'whoami':
-        return { content: 'sankalp', type: 'output' };
-      
-      case 'date':
-        return { content: new Date().toString(), type: 'output' };
-      
-      case 'uname':
-        return { content: 'Portfolio-OS 2.1.0 Terminal x86_64', type: 'output' };
-      
+
+      case "pwd":
+        return { content: "/home/JupiterCodes/portfolio", type: "output" };
+
+      case "whoami":
+        return { content: "JupiterCodes", type: "output" };
+
+      case "date":
+        return { content: new Date().toString(), type: "output" };
+
+      case "uname":
+        return {
+          content: "Portfolio-OS 2.1.0 Terminal x86_64",
+          type: "output",
+        };
+
       default:
-        return { 
-          content: `Command not found: ${command}. Type 'help' for available commands.`, 
-          type: 'error' 
+        return {
+          content: `Command not found: ${command}. Type 'help' for available commands.`,
+          type: "error",
         };
     }
   }
@@ -104,8 +109,8 @@ System Commands:
   date           - Show current date and time
   uname          - Show system information
 
-Fun Commands:
-  sudo rm -rf /* - Don't try this at home! (joke)
+ Don't Commands:
+  sudo rm -rf /* - Don't try this at home!
 
 Navigation:
   ↑/↓ arrows     - Navigate command history
@@ -113,7 +118,7 @@ Navigation:
   
 Try typing 'about' to learn more about me!
 `;
-    return { content: helpText, type: 'output' };
+    return { content: helpText, type: "output" };
   }
 
   private showAbout(): CommandResult {
@@ -136,7 +141,7 @@ Fun fact: I love combining traditional terminal aesthetics
 
 Type 'skills' to see my technical expertise or 'projects' to view my work.
 `;
-    return { content: aboutText, type: 'output' };
+    return { content: aboutText, type: "output" };
   }
 
   private showSkills(): CommandResult {
@@ -146,33 +151,32 @@ Type 'skills' to see my technical expertise or 'projects' to view my work.
 ╚══════════════════════════════════════════════════════════════╝
 
 Programming Languages:
-▪ Python ████████████████████████████████ Expert
-▪ JavaScript ███████████████████████████ Advanced
-▪ TypeScript ████████████████████████████ Advanced
-▪ C++ ██████████████████████ Intermediate
+▪ Python 
+▪ JavaScript 
+▪ TypeScript
 
 AI/ML & Data Science:
 ▪ TensorFlow      ▪ PyTorch         ▪ Scikit-learn
 ▪ Computer Vision ▪ NLP             ▪ Deep Learning
-▪ Data Analysis   ▪ Model Deployment ▪ MLOps
+▪ Data Analysis   ▪ MLOps
 
 Web Development:
-▪ React ████████████████████████████████ Expert
-▪ Node.js ██████████████████████████████ Advanced
-▪ Tailwind CSS ████████████████████████████ Expert
-▪ Next.js ███████████████████████ Advanced
+▪ React
+▪ Node.js
+▪ Tailwind CSS
+▪ Next.js
 
 Databases & Cloud:
 ▪ MongoDB    ▪ PostgreSQL   ▪ AWS        ▪ Docker
-▪ Redis      ▪ Firebase     ▪ GCP        ▪ Kubernetes
+▪ Redis      ▪ Firebase     ▪ MySQL      ▪ Kubernetes
 
 Tools & Others:
 ▪ Git/GitHub ▪ Linux       ▪ Docker      ▪ API Design
-▪ Testing    ▪ CI/CD       ▪ Agile       ▪ System Design
+▪ Testing    ▪ CI/CD       ▪ System Design
 
 ${personalInfo.skills.length} skills mastered and counting...
 `;
-    return { content: skillsText, type: 'output' };
+    return { content: skillsText, type: "output" };
   }
 
   private showProjects(): CommandResult {
@@ -186,19 +190,19 @@ ${personalInfo.skills.length} skills mastered and counting...
     personalInfo.projects.forEach((project, index) => {
       projectsText += `
 [${index + 1}] ${project.name}
-${'-'.repeat(project.name.length + 4)}
+${"-".repeat(project.name.length + 4)}
 Description: ${project.description}
-Tech Stack:  ${project.tech.join(' • ')}`;
-      
+Tech Stack:  ${project.tech.join(" • ")}`;
+
       if (project.github) {
         projectsText += `\nGitHub:      ${project.github}`;
       }
-      
+
       if (project.live) {
         projectsText += `\nLive Demo:   ${project.live}`;
       }
-      
-      projectsText += '\n';
+
+      projectsText += "\n";
     });
 
     projectsText += `
@@ -208,7 +212,7 @@ All projects are available on my GitHub profile.
 Want to know more about any project? Ask my AI: 'ask tell me about [project name]'
 `;
 
-    return { content: projectsText, type: 'output' };
+    return { content: projectsText, type: "output" };
   }
 
   private showExperience(): CommandResult {
@@ -234,7 +238,7 @@ Current Focus: AI/ML Research & Development
 Looking for new opportunities in AI/ML and full-stack development!
 `;
 
-    return { content: expText, type: 'output' };
+    return { content: expText, type: "output" };
   }
 
   private showResume(): CommandResult {
@@ -259,7 +263,7 @@ Format: PDF | Last Updated: ${new Date().toLocaleDateString()}
 You can also view my experience here by typing 'experience'
 or check out my projects with 'projects'.
 `;
-    return { content: resumeText, type: 'output' };
+    return { content: resumeText, type: "output" };
   }
 
   private showSocials(): CommandResult {
@@ -287,36 +291,38 @@ Connect with me on:
 🤝 Always open to connecting with fellow developers and AI enthusiasts!
 `;
 
-    return { content: socialsText, type: 'output' };
+    return { content: socialsText, type: "output" };
   }
 
   private getSocialIcon(platform: string): string {
     const icons: Record<string, string> = {
-      'GitHub': '🐙',
-      'LinkedIn': '💼',
-      'Twitter': '🐦',
-      'Email': '📧',
-      'Portfolio': '🌐',
-      'Instagram': '📷'
+      GitHub: "🐙",
+      LinkedIn: "💼",
+      Twitter: "🐦",
+      Email: "📧",
+      Portfolio: "🌐",
+      Instagram: "📷",
     };
-    return icons[platform] || '🔗';
+    return icons[platform] || "🔗";
   }
 
   private async askAI(question: string): Promise<CommandResult> {
     if (!question.trim()) {
-      return { 
-        content: 'Please provide a question. Usage: ask <your question>', 
-        type: 'error' 
+      return {
+        content: "Please provide a question. Usage: ask <your question>",
+        type: "error",
       };
     }
 
     try {
       const response = await geminiService.askQuestion(question);
-      return { content: `🤖 AI Assistant: ${response}`, type: 'ai' };
+      return { content: `🤖 AI Assistant: ${response}`, type: "ai" };
     } catch (error) {
-      return { 
-        content: `AI service error: ${error instanceof Error ? error.message : 'Unknown error'}`, 
-        type: 'error' 
+      return {
+        content: `AI service error: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+        type: "error",
       };
     }
   }
@@ -324,18 +330,21 @@ Connect with me on:
   private async getJoke(): Promise<CommandResult> {
     try {
       const joke = await geminiService.getJoke();
-      return { content: `😄 ${joke}`, type: 'ai' };
-    } catch (error) {
-      return { content: 'Error getting joke. Try again later!', type: 'error' };
+      return { content: `😄 ${joke}`, type: "ai" };
+    } catch {
+      return { content: "Error getting joke. Try again later!", type: "error" };
     }
   }
 
   private async getInspiration(): Promise<CommandResult> {
     try {
       const quote = await geminiService.getInspiration();
-      return { content: `✨ ${quote}`, type: 'ai' };
-    } catch (error) {
-      return { content: 'Error getting inspiration. Try again later!', type: 'error' };
+      return { content: `✨ ${quote}`, type: "ai" };
+    } catch {
+      return {
+        content: "Error getting inspiration. Try again later!",
+        type: "error",
+      };
     }
   }
 
@@ -354,28 +363,28 @@ drwxr-xr-x  3 root    root     4096 ${new Date().toLocaleDateString()} ../
 
 Use commands like 'about', 'skills', 'projects' etc. to read these files.
 `;
-    return { content: dirText, type: 'output' };
+    return { content: dirText, type: "output" };
   }
 
   private sudoRmRf(): CommandResult {
     const stages = [
-      'Removing /usr... ',
-      'Removing /var... ',
-      'Removing /etc... ',
-      'Removing /home... ',
-      'System destroyed successfully! 💥',
-      '',
-      'Just kidding! 😄',
-      'This is a portfolio website, not an actual Linux system.',
-      'No files were harmed in the making of this joke.',
-      '',
+      "Removing /usr... ",
+      "Removing /var... ",
+      "Removing /etc... ",
+      "Removing /home... ",
+      "System destroyed successfully! 💥",
+      "",
+      "Just kidding! 😄",
+      "This is a portfolio website, not an actual Linux system.",
+      "No files were harmed in the making of this joke.",
+      "",
       'Pro tip: Never run "sudo rm -rf /*" on a real system!',
-      'It would delete everything irreversibly.',
-      '',
-      'Stay safe and keep coding! 👨‍💻'
+      "It would delete everything irreversibly.",
+      "",
+      "Stay safe and keep coding! 👨‍💻",
     ];
 
-    return { content: stages.join('\n'), type: 'ai' };
+    return { content: stages.join("\n"), type: "ai" };
   }
 }
 
