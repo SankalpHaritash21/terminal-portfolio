@@ -181,7 +181,7 @@ const Terminal: React.FC = () => {
             <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           </div>
-          <span className="ml-4 text-sm">sankalp@portfolio:~$</span>
+          <span className="ml-4 text-sm">JupiterCodes@portfolio:~$</span>
         </div>
         <div className="text-xs text-gray-500">Terminal v2.1.0</div>
       </div>
